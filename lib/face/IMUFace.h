@@ -1,29 +1,42 @@
 #pragma once
 
-#include "NumericMeasure.h"
+#include "FaceModule.h"
 #include "ISubscriber.h"
 #include "Event.h"
+#include "Measure.h"
 
 
-class IMUFace : public NumericMeasure, ISubscriber
+class IMUFace : public FaceModule, ISubscriber
 {
 public:
-    IMUFace(const char* name, unsigned long cycleCheckTime) : NumericMeasure("Y/P/R", cycleCheckTime, "deg") {}
+    IMUFace(const char* name = "Y/P/R") : FaceModule(name) {}
 
     void onEvent(const Event& e) override
     {
-        if (e.type == Event::YawChanged) measures[0] = e.data / 10.0;
-        else if (e.type == Event::PitchChanged) measures[1] = e.data / 10.0;
-        else if (e.type == Event::RollChanged) measures[2] = e.data / 10.0;
+        if (e.type == Event::YawChanged)
+            yaw.set(e.data);
+        else if (e.type == Event::PitchChanged)
+            pitch.set(e.data);
+        else if (e.type == Event::RollChanged)
+            roll.set(e.data);
     }
 
 protected:
     bool setup() override
     {
         ctx.bus->subscribe(this);
-        backgroundProcessing = true;    // keep yaw / pitch / roll up-to-date
-        setMeasures({0.0f, 0.0f, 0.0f});
 
         return true;
     }
+
+    void renderFace() override
+    {
+        renderMeasuresToSprite(ypr, "Y / P / R");
+    }
+
+private:
+    Measure<short> yaw{-1, "deg"};
+    Measure<short> pitch{-1, "deg"};
+    Measure<short> roll{-1, "deg"};
+    std::vector<IMeasure*> ypr{&yaw, &pitch, &roll};
 };

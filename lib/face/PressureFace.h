@@ -1,21 +1,26 @@
 #pragma once
 
-#include "NumericMeasure.h"
+#include "FaceModule.h"
 #include "ISubscriber.h"
 #include "Event.h"
+#include "Measure.h"
+#include "UnitConverter.h"
 
 
-class PressureFace : public NumericMeasure, ISubscriber
+class PressureFace : public FaceModule, ISubscriber
 {
 public:
-    PressureFace(const char* name, unsigned long cycleCheckTime) : NumericMeasure("Pressure", cycleCheckTime, "inHg") {}
+    PressureFace(const char* name = "Pressure") : FaceModule(name) {}
 
     void onEvent(const Event& e) override
     {
-        if (e.type == Event::PressureChanged) setMeasureValue(toInHg(e.data / 10.0f));
+        if (e.type == Event::PressureChanged)
+            measure.set((e.data / 10.0 + mbarToInHg.offset) * mbarToInHg.scale);
     }
 
 protected:
+    Measure<float> measure{0.0f, "inHg", 2};
+
     bool setup() override
     {
         ctx.bus->subscribe(this);
@@ -23,7 +28,8 @@ protected:
         return true;
     }
 
-private:
-    static float toInHg(float val) { return val * 0.02952998057228f; };
-
+    void renderFace() override
+    {
+        renderMeasureToSprite(&measure);
+    }
 };

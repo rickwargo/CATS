@@ -6,19 +6,19 @@
 #include "Measure.h"
 
 
-class TemperatureFace : public FaceModule, ISubscriber
+class LightLevelFace : public FaceModule, ISubscriber
 {
 public:
-    TemperatureFace(const char* name = "Temperature") : FaceModule(name) {}
+    LightLevelFace(const char* name = "Light Level") : FaceModule(name) {}
 
     void onEvent(const Event& e) override
     {
-        if (e.type == Event::TemperatureChanged)
-            measure.set(e.data / 10.0);
+        if (e.type == Event::LightLevelChanged)
+            measure.set(e.data);
     }
 
 protected:
-    Measure<float> measure{0.0f, "F", 1};
+    Measure<short> measure{-111, "lux"};
 
     bool setup() override
     {

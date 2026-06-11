@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Property.h"
+#include "../include/Property.h"
 
 class NumericMeasure: public FaceModule
 {
@@ -18,6 +18,7 @@ protected:
     void setMeasureValue(int value) { measures = {(float)value}; displayFmt = "%d"; }
     void setMeasures(std::vector<float> values) { measures = values; displayFmt = "%.1f"; }
 
+#if 0
     void renderToSprite(TFT_eSprite& sprite)
     {
         char buf[20];
@@ -42,7 +43,7 @@ protected:
     {
         renderToSprite(*ctx.sprite);
     }
-
+#endif
 private:
     [[nodiscard]] float getFirstMeasure() const { return !measures.empty() ? measures[0] : 0; }
     void setFirstMeasure(const float value) { measures = {value}; displayFmt = "%.1f"; }

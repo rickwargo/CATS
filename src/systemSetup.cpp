@@ -21,6 +21,8 @@
 #include "face/IAQFace.h"
 #include "face/PressureFace.h"
 #include "face/IMUFace.h"
+#include "face/LightLevelFace.h"
+#include "face/MeasuresFace.h"
 // #include "face/DGFace.h"
 
 void loadModules()
@@ -44,11 +46,13 @@ void loadModules()
 
     static FaceManager faceManager("Face Manager", 1000);   // Must be loaded prior to loading faces
     static ClockFace clockFace("Clock", 500);
-    static TemperatureFace temperatureFace("Temperature", 1000);
-    static HumidityFace humidityFace("Humidity", 1000);
-    static IAQFace iaqFace("IAQ", 1000);
-    static PressureFace pressureFace("Pressure", 1000);
-    static IMUFace imuFace("IMU", 400);
+    static TemperatureFace temperatureFace("Inside Temperature");
+    static HumidityFace humidityFace("Humidity");
+    static IAQFace iaqFace("IAQ");
+    static PressureFace pressureFace("Pressure");
+    static LightLevelFace lightLevelFace("Light Level");
+    static IMUFace imuFace("IMU");
+    static MeasuresFace measuresFace("Measures");
     // static DGFace dgFace("DG", 100);
 
     registry.registerModule(systemModule);
@@ -71,6 +75,8 @@ void loadModules()
     registry.registerModule(humidityFace);
     registry.registerModule(iaqFace);
     registry.registerModule(pressureFace);
+    registry.registerModule(lightLevelFace);
     registry.registerModule(imuFace);
+    registry.registerModule(measuresFace);
     // registry.registerModule(dgFace);
 }

@@ -5,8 +5,6 @@
 
 #include <utility>
 #include "module/PinModule.h"
-#include "Event.h"
-#include "say.h"
 
 class BuzzerModule : public PinModule
 {
@@ -71,7 +69,7 @@ private:
         if (!canPlayNotes && rtttl::isPlaying())
         {
             rtttl::stop();
-            ledcDetachPin(pin);
+            ledcDetach(pin);
         } else if (!rtttl::isPlaying() && canPlayNotes)
         {
             while (currentSound < 0) currentSound += soundCount; // incase a large negative number is used to index

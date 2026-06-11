@@ -204,20 +204,21 @@ private:
             imu.dmpGetAccel(&aa, FIFOBuffer);
             imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
             imu.dmpConvertToWorldFrame(&aaWorld, &aaReal, &q);
+
             short dat;
-            dat = round(ypr[0] * 180.0 / M_PI * 10.0);
+            dat = round(ypr[0] * 180.0 / M_PI);
             if (dat != previousYaw)
             {
                 onYawChanged(dat);
                 previousYaw = dat;
             }
-            dat = round(ypr[1] * 180.0 / M_PI * 10.0);
+            dat = round(ypr[1] * 180.0 / M_PI);
             if (dat != previousPitch)
             {
                 onPitchChanged(dat);
                 previousPitch = dat;
             }
-            dat = round(ypr[2] * 180.0 / M_PI * 10.0);
+            dat = round(ypr[2] * 180.0 / M_PI);
             if (dat != previousRoll)
             {
                 onRollChanged(dat);

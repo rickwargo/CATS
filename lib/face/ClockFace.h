@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include <TimeLib.h>
 #include <Timezone.h>
-#include "module/FaceModule.h"
+#include "FaceModule.h"
 
 #define CLOCK_FG   FACE_FOREGROUND_COLOR_DEFAULT
 #define CLOCK_BG   FACE_BACKGROUND_COLOR_DEFAULT              //  faceBgColors[FACE_CLOCK]

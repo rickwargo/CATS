@@ -1,6 +1,6 @@
 #pragma once
 
-#include "module/FaceModule.h"
+#include "FaceModule.h"
 #include "ISubscriber.h"
 #include "Event.h"
 

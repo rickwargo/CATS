@@ -70,7 +70,7 @@ protected:
         {
             const char* unit = m->unit();
             char buf[42];
-            snprintf(buf, sizeof buf, unit ? "%s (%s)" : "%s", measureName, unit);
+            snprintf(buf, sizeof buf, unit && unit[0] ? "%s (%s)" : "%s", measureName, unit);
 
             sprite.setTextFont(2);
             sprite.setTextColor(FACE_FOREGROUND_COLOR_DEFAULT);

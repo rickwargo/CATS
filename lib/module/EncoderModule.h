@@ -14,7 +14,7 @@ public:
     {
         short value = encoder.readEncoder();
         if (delta && ctx.bus) {
-            say("[Encoder changed] value: %d, delta: %d", value, delta);
+            // say("[Encoder changed] value: %d, delta: %d", value, delta);
             // When a small motor is affixed to the dial, a haptic feedback response should be requested
             //ctx.bus->publish({Event::HapticFeedbackRequest, this, delta > 0 ? 0 : 180}); // haptic 0 (degrees) for forward, 180 (degrees) for reverse direction
             if (delta < 0) ctx.bus->publish({Event::EncoderCCW, this, -delta});

@@ -24,7 +24,7 @@ public:
             currentMeasure = &humidity;
             break;
         case Event::LightLevelChanged:
-            humidity.set(e.data);
+            lightLevel.set(e.data);
             currentMeasure = &lightLevel;
             break;
         case Event::PressureChanged:

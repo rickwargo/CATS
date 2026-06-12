@@ -38,7 +38,6 @@ protected:
     bool setup() override
     {
         ctx.bus->subscribe(this);
-        // initializeCompassRoseSprite();
         offscreen.setColorDepth(COLOR_DEPTH_DEFAULT);
         offscreen.createSprite(TFT_WIDTH, TFT_HEIGHT);
         offscreen.setPivot(FACE_CENTER_X, FACE_CENTER_Y);
@@ -53,7 +52,7 @@ protected:
         drawHorizonBackground(roll, offscreen);
         offscreen.pushRotated(ctx.sprite, pitch < 0 ? pitch + 360 : pitch);
         drawCompassRoseSprite(offscreen);
-        offscreen.pushRotated(ctx.sprite, yaw < 0 ? yaw + 360 : yaw, TFT_TRANSPARENT);
+        offscreen.pushRotated(ctx.sprite, -(yaw < 0 ? yaw + 360 : yaw), TFT_TRANSPARENT);
         drawDirectionalSymbol(*ctx.sprite);
     }
 
@@ -108,7 +107,7 @@ private:
             int x = FACE_CENTER_X + sin(angle) * 72;
             int y = FACE_CENTER_Y - cos(angle) * 72;
 
-            sprite.drawNumber(deg / 10, x, y); // 30→3, 60→6, etc.
+            sprite.drawNumber(deg, x, y); // 30→3, 60→6, etc.
         }
 
         // -------- N E S W Letters --------

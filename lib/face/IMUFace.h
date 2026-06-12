@@ -31,7 +31,7 @@ protected:
 
     void renderFace() override
     {
-        renderMeasuresToSprite(ypr, "Y / P / R");
+        renderMeasuresToSprite(ypr, getName());
     }
 
 private:

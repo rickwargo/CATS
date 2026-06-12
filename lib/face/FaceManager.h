@@ -45,7 +45,7 @@ protected:
     virtual void switchFace(FaceModule *face)
     {
         const char *name = ctx.activeFace ? ctx.activeFace->getName() ? ctx.activeFace->getName() : "UNKNOWN" : "Initial Display";
-        say("[switchFace] switching from %s to %s", name, face->getName());
+        // say("[switchFace] switching from %s to %s", name, face->getName());
         if (ctx.activeFace) ctx.activeFace->onDeactivate();
         ctx.activeFace = face;
         ctx.activeFace->onActivate();

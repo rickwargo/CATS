@@ -24,6 +24,7 @@
 #include "face/LightLevelFace.h"
 #include "face/MeasuresFace.h"
 #include "face/DGFace.h"
+#include "face/AutoFace.h"
 
 void loadModules()
 {
@@ -41,7 +42,7 @@ void loadModules()
     // static HapticModule hapticReverseModule("Haptic Feedback Reverse", HAPTIC_PIN_2);
     // static ShifterModule shifterModule("Shifter LED", SHIFTER_PIN);
     static EnvironmentModule environmentModule("Environment Sensor", 1000);
-    static IMUModule imuModule("Inertial Measurement Unit", 100);
+    static IMUModule imuModule("Inertial Measurement Unit", 50);
     // static StorageModule storageModule("SD Card Storage");
 
     static FaceManager faceManager("Face Manager", 1000);   // Must be loaded prior to loading faces
@@ -53,7 +54,8 @@ void loadModules()
     static LightLevelFace lightLevelFace("Light Level");
     static IMUFace imuFace("IMU");
     static MeasuresFace measuresFace("Measures");
-    static DGFace dgFace("DG", 100);
+    static DGFace dgFace("DG", 50);
+    static AutoFace autoFace("Auto", 0);
 
     registry.registerModule(systemModule);
     registry.registerModule(displayModule);
@@ -72,6 +74,7 @@ void loadModules()
     registry.registerModule(faceManager);
     registry.registerModule(clockFace);
     registry.registerModule(dgFace);
+    registry.registerModule(autoFace);
     registry.registerModule(temperatureFace);
     registry.registerModule(humidityFace);
     registry.registerModule(iaqFace);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "car.h"
 #include "FaceModule.h"
 #include "ISubscriber.h"
 #include "Event.h"
@@ -38,21 +39,33 @@ protected:
     bool setup() override
     {
         ctx.bus->subscribe(this);
+        disableWindowChrome();
+
+        return true;
+    }
+
+    virtual void onActivate()
+    {
         offscreen.setColorDepth(COLOR_DEPTH_DEFAULT);
         offscreen.createSprite(TFT_WIDTH, TFT_HEIGHT);
         offscreen.setPivot(FACE_CENTER_X, FACE_CENTER_Y);
         offscreen.setTextDatum(TEXT_DATUM_DEFAULT);
         offscreen.setTextColor(TFT_GOLD, TFT_TRANSPARENT);
 
-        return true;
+        drawFace();
+    }
+
+    virtual void onDeactivate()
+    {
+        offscreen.deleteSprite();
     }
 
     void renderFace() override
     {
-        drawHorizonBackground(roll, offscreen);
-        offscreen.pushRotated(ctx.sprite, pitch < 0 ? pitch + 360 : pitch);
+        drawHorizonBackground(offscreen, roll);
+        offscreen.pushRotated(ctx.sprite, pitch);
         drawCompassRoseSprite(offscreen);
-        offscreen.pushRotated(ctx.sprite, -(yaw < 0 ? yaw + 360 : yaw), TFT_TRANSPARENT);
+        offscreen.pushRotated(ctx.sprite, -yaw, TFT_TRANSPARENT);
         drawDirectionalSymbol(*ctx.sprite);
     }
 
@@ -63,9 +76,8 @@ private:
     short pitch = 0;
     short roll = 0;
     TFT_eSprite offscreen = TFT_eSprite(ctx.display);
-    TFT_eSprite horizon = TFT_eSprite(ctx.display);
 
-    void drawCompassRoseSprite(TFT_eSprite &sprite)
+    void drawCompassRoseSprite(TFT_eSprite& sprite)
     {
         sprite.fillSprite(TFT_TRANSPARENT);
         sprite.setTextFont(2);
@@ -124,13 +136,19 @@ private:
         }
     }
 
-    void drawDirectionalSymbol(TFT_eSprite& sprite)
+    int nose = -58;
+    void drawDirectionalSymbol(TFT_eSprite& sprite) const
+    {
+        drawCar(sprite, nose, 15);
+        // drawDirectionalSymbolTriangle(sprite);
+    }
+
+    void drawDirectionalSymbolTriangle(TFT_eSprite& sprite) const
     {
         // =================================================
         // Directional Symbol (Centered, Larger)
         // =================================================
 
-        int nose = -58;
         int cx = FACE_CENTER_X;
         int cy = FACE_CENTER_Y + nose;
 
@@ -144,12 +162,12 @@ private:
 
     }
 
-    void drawHorizonBackground(short rollAngle, TFT_eSprite &sprite)
+    void drawHorizonBackground(TFT_eSprite& sprite, short rollAngle)
     {
         int pitchLineThickness = 5;
         int h = FACE_CENTER_Y - (TFT_HEIGHT / 2 * rollAngle / 90);
-        sprite.fillRect(0, 0, TFT_WIDTH, h, TFT_BLUE);
-        sprite.fillRect(0, h, TFT_WIDTH, TFT_HEIGHT - h, TFT_OLIVE);
+        sprite.fillRect(0, 0, TFT_WIDTH, h, SKY_COLOR);
+        sprite.fillRect(0, h, TFT_WIDTH, TFT_HEIGHT - h, GROUND_COLOR);
         sprite.fillRect(0, h - (pitchLineThickness - 1)/2, TFT_WIDTH, pitchLineThickness, TFT_RED);
     }
 };

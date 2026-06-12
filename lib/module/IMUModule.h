@@ -5,6 +5,7 @@
 #include "module/I2CModule.h"
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
+#include "say.h"
 
 /* OUTPUT FORMAT DEFINITION-------------------------------------------------------------------------------------------
 - Use "OUTPUT_READABLE_QUATERNION" for quaternion components in [w, x, y, z] format. Quaternion does not
@@ -163,8 +164,8 @@ private:
         {
             imu.CalibrateAccel(6); // Calibration Time: generate offsets and calibrate our MPU6050
             imu.CalibrateGyro(6);
-            say("These are the Active offsets: ");
-            imu.PrintActiveOffsets();
+            // say("These are the Active offsets: ");
+            // imu.PrintActiveOffsets();
             // say(F("Enabling DMP..."));   //Turning ON DMP
             imu.setDMPEnabled(true);
 

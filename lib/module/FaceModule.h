@@ -14,7 +14,7 @@ class FaceModule : public Module
 public:
     FaceModule(std::string name) : Module(std::move(name)) { setCycleCheckTime(1000); }
     FaceModule(std::string name, unsigned long cycleCheckTime) : Module(std::move(name), cycleCheckTime) {}
-    // virtual ~FaceModule() = default;
+
     virtual bool ignoreEvents()
     {
         return  !requiresBackgroundProcessing() && !isActiveFace();
@@ -42,6 +42,16 @@ protected:
     bool canCycle() override
     {
         return isActiveFace() || requiresBackgroundProcessing();
+    }
+
+    void disableWindowChrome()
+    {
+        disableChrome = true;
+    }
+
+    void enableWindowChrome()
+    {
+        disableChrome = false;
     }
 
     virtual void drawWindowChrome()
@@ -93,7 +103,7 @@ protected:
         ctx.sprite->fillSprite(bgColor);
 
         renderFace();
-        drawWindowChrome();
+        if (!disableChrome) drawWindowChrome();
         ctx.sprite->pushSprite(0, 0);
     }
 
@@ -102,4 +112,7 @@ protected:
         if (isActiveFace())
             drawFace();
     }
+
+private:
+    bool disableChrome = false;
 };

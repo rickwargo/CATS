@@ -18,7 +18,7 @@ protected:
     {
         pinMode(pin, INPUT_PULLUP);     // If attached to a read-only pin, this should only be INPUT
         button.begin(pin);
-        button.setLongClickTime(333);
+        button.setLongClickTime(500);
 
         button.setClickHandler([this](Button2&) {
             onClick();
@@ -49,8 +49,7 @@ protected:
 
     virtual void onLongClick() {
         if (ctx.bus) {
-            ctx.bus->publish({Event::SystemReset, this});
-            // ctx.bus->publish({Event::ButtonLong, this});
+            ctx.bus->publish({Event::ButtonLong, this});
         }
     }
 
@@ -62,7 +61,8 @@ protected:
 
     virtual void onTripleClick() {
         if (ctx.bus) {
-            ctx.bus->publish({Event::ButtonTriple, this});
+            ctx.bus->publish({Event::SystemReset, this});
+            // ctx.bus->publish({Event::ButtonTriple, this});
         }
     }
 

@@ -23,7 +23,7 @@
 #include "face/IMUFace.h"
 #include "face/LightLevelFace.h"
 #include "face/MeasuresFace.h"
-// #include "face/DGFace.h"
+#include "face/DGFace.h"
 
 void loadModules()
 {
@@ -53,7 +53,7 @@ void loadModules()
     static LightLevelFace lightLevelFace("Light Level");
     static IMUFace imuFace("IMU");
     static MeasuresFace measuresFace("Measures");
-    // static DGFace dgFace("DG", 100);
+    static DGFace dgFace("DG", 100);
 
     registry.registerModule(systemModule);
     registry.registerModule(displayModule);
@@ -71,6 +71,7 @@ void loadModules()
     // registry.registerModule(storageModule);
     registry.registerModule(faceManager);
     registry.registerModule(clockFace);
+    registry.registerModule(dgFace);
     registry.registerModule(temperatureFace);
     registry.registerModule(humidityFace);
     registry.registerModule(iaqFace);
@@ -78,5 +79,4 @@ void loadModules()
     registry.registerModule(lightLevelFace);
     registry.registerModule(imuFace);
     registry.registerModule(measuresFace);
-    // registry.registerModule(dgFace);
 }

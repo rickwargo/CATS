@@ -200,25 +200,25 @@ private:
             imu.dmpGetQuaternion(&q, FIFOBuffer);
             imu.dmpGetGravity(&gravity, &q);
             imu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-            imu.dmpGetEuler(euler, &q);
-            imu.dmpGetAccel(&aa, FIFOBuffer);
-            imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-            imu.dmpConvertToWorldFrame(&aaWorld, &aaReal, &q);
+            // imu.dmpGetEuler(euler, &q);
+            // imu.dmpGetAccel(&aa, FIFOBuffer);
+            // imu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
+            // imu.dmpConvertToWorldFrame(&aaWorld, &aaReal, &q);
 
             short dat;
-            dat = round(ypr[0] * 180.0 / M_PI);
+            dat = round(2 * ypr[0] * 180.0 / M_PI);
             if (dat != previousYaw)
             {
                 onYawChanged(dat);
                 previousYaw = dat;
             }
-            dat = round(ypr[1] * 180.0 / M_PI);
+            dat = round(2 * ypr[1] * 180.0 / M_PI);
             if (dat != previousPitch)
             {
                 onPitchChanged(dat);
                 previousPitch = dat;
             }
-            dat = round(ypr[2] * 180.0 / M_PI);
+            dat = round(2 * ypr[2] * 180.0 / M_PI);
             if (dat != previousRoll)
             {
                 onRollChanged(dat);

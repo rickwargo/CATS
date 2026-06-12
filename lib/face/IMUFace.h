@@ -31,12 +31,12 @@ protected:
 
     void renderFace() override
     {
-        renderMeasuresToSprite(ypr, getName());
+        renderMeasuresToSprite(ypr);
     }
 
 private:
-    Measure<short> yaw{-1, "deg"};
-    Measure<short> pitch{-1, "deg"};
-    Measure<short> roll{-1, "deg"};
+    Measure<short> yaw{-1, "`"};
+    Measure<short> pitch{-1, "`"};
+    Measure<short> roll{-1, "`"};
     std::vector<IMeasure*> ypr{&yaw, &pitch, &roll};
 };

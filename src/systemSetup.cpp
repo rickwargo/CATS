@@ -52,7 +52,7 @@ void loadModules()
     static IAQFace iaqFace("IAQ");
     static PressureFace pressureFace("Pressure");
     static LightLevelFace lightLevelFace("Light Level");
-    static IMUFace imuFace("IMU");
+    static IMUFace imuFace("Y/P/R");
     static MeasuresFace measuresFace("Measures");
     static DGFace dgFace("DG", 50);
     static AutoFace autoFace("Auto", 0);

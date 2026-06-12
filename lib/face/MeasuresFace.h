@@ -76,7 +76,7 @@ protected:
     }
 
 private:
-    Measure<float> temperature{0.0f, "F", 1};
+    Measure<float> temperature{0.0f, "`F", 1};
     Measure<float> humidity{0.0f, "%", 1};
     Measure<float> pressure{0.0f, "inHg", 2};
     Measure<short> lightLevel{-111, "lux"};

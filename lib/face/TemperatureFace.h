@@ -18,7 +18,7 @@ public:
     }
 
 protected:
-    Measure<float> measure{0.0f, "F", 1};
+    Measure<float> measure{0.0f, "`F", 1};
 
     bool setup() override
     {

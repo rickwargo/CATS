@@ -70,6 +70,10 @@ protected:
     {
         renderMeasuresToSprite({measure}, measureName);
     }
+    void renderMeasuresToSprite(const std::vector<IMeasure *>&measures)
+    {
+        renderMeasuresToSprite(measures, getName());
+    }
     void renderMeasuresToSprite(const std::vector<IMeasure *>&measures, const char *measureName)
     {
         TFT_eSprite& sprite = *ctx.sprite;
@@ -80,7 +84,7 @@ protected:
         {
             const char* unit = m->unit();
             char buf[42];
-            snprintf(buf, sizeof buf, unit && unit[0] ? "%s (%s)" : "%s", measureName, unit);
+            snprintf(buf, sizeof buf, nMeasures == 1 && unit && unit[0] ? "%s (%s)" : "%s", measureName, unit);
 
             sprite.setTextFont(2);
             sprite.setTextColor(FACE_FOREGROUND_COLOR_DEFAULT);
@@ -90,6 +94,7 @@ protected:
             sprite.setTextSize(1);
             sprite.setTextFont(nMeasures > 1 ? 4 : 6);
             m->format(buf, sizeof(buf));
+            if (nMeasures > 1 && *unit) snprintf(buf, sizeof buf, "%s%s", buf, unit);
             sprite.drawString(buf, FACE_CENTER_X, y);
             y += measureScreenHeight;
         }

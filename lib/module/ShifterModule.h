@@ -1,13 +1,16 @@
 #pragma once
 
 #include <Arduino.h>
-#include <FastLED.h>
 
 #include <utility>
-#include "module/PinModule.h"
+#include "PinModule.h"
 #include "ISubscriber.h"
 #include "Event.h"
 #include "systemSetup.h"
+
+#ifdef FAST_LED
+#include <FastLED.h>
+#endif
 
 #define NUM_LEDS            7
 #define BRIGHTNESS          128
@@ -19,7 +22,7 @@ class ShifterModule : public PinModule, public ISubscriber
 public:
     ShifterModule(std::string name, short pin) : PinModule(std::move(name), SHIFTER_PIN) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         switch (e.type) {
         case Event::LightLevelDark:
@@ -41,43 +44,47 @@ protected:
         setCycleCheckTime(1000 / SHIFTER_UPDATES_PER_SECOND);
 
         pinMode(SHIFTER_PIN, OUTPUT);
+#ifdef FAST_LED
         FastLED.addLeds<LED_TYPE, SHIFTER_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
         FastLED.setBrightness(  BRIGHTNESS );
 
         currentPalette = RainbowColors_p;
         currentBlending = LINEARBLEND;
-
+#endif
         return true;
     }
 
     void cycle() override
     {
-        ChangePalettePeriodically();
-
+#ifdef FAST_LED
         static unsigned short startIndex = 0;
         startIndex = startIndex + 1; /* motion speed */
 
+        ChangePalettePeriodically();
         FillLEDsFromPaletteColors(startIndex);
 
         FastLED.show();
-
+#endif
     }
 
-    virtual void onLightLevelChange(const Event& e) {
+    virtual void onLightLevelChange(Event& e) {
         switch (e.type)
         {
+#ifdef FAST_LED
         case Event::LightLevelDark:
             brightness = 128;
             break;
         case Event::LightLevelLight:
             brightness = 255;
             break;
-        default:
+#endif
+    default:
             break;
         }
     }
 
 private:
+#ifdef FAST_LED
     CRGB leds[NUM_LEDS];
     CRGBPalette16 currentPalette;
     TBlendType    currentBlending;
@@ -184,5 +191,5 @@ private:
         CRGB::Black,
         CRGB::Black
     };
-
+#endif
 };

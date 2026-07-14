@@ -1,10 +1,10 @@
 #pragma once
 
-#include <Arduino.h>
+#ifdef ENVIRONMENT_SENSOR
 #include <bsec2.h>
-#include <utility>
+#endif
 
-#include "module/I2CModule.h"
+#include "I2CModule.h"
 #include "Event.h"
 
 // Sample Rate defines the frequency an environment is sensed by the BSEC chip
@@ -26,8 +26,10 @@
 // For example, when using popular integrations like ESPHome or standard Arduino BSEC,
 // you define your rate via the configuration object or initialization function.
 
+#ifdef IMU_SENSOR
 #define SAMPLE_RATE		 BSEC_SAMPLE_RATE_LP
 // #define SAMPLE_RATE		 BSEC_SAMPLE_RATE_ULP
+#endif
 
 
 inline const char* accuracyStatus[] = {
@@ -74,18 +76,20 @@ public:
     float gasPercentage;
     int64_t time_stamp;
 
+#ifdef ENVIRONMENT_SENSOR
     void update(const bsecOutputs& outputs);
     void outputData();
-
+#endif
     // report a good value, but only when it has stabilized
     short iaq() const { return gasReadingStabilized ? staticIaq : -1; }
 
     // Convert from hPa (millibars) to inHg
-    float pressure_inHg() const { return pressure * 0.02952998057228; }
-    float pressure_mmHg() const { return pressure * 0.02952998057228 * 25.4; }
+    float to_inHg(float p) const { return p * 0.02952998057228; }
+    float pressure_inHg() const { return to_inHg(pressure); }
 
     // convert to degrees Fahrenheit
-    float temperature_degF() const { return temperature * 9.0 / 5.0 + 32.0; }
+    float to_degF(float t) const { return t * 9.0 / 5.0 + 32.0; }
+    float temperature_degF() const { return to_degF(temperature); }
 
     // convert to kOhms
     float gasSensorResistance_kOhms() const
@@ -109,14 +113,17 @@ public:
 protected:
     bool setup() override
     {
+#ifdef ENVIRONMENT_SENSOR
         instance = this;
 
         if (!bme680Setup()) return false;
+#endif
         return true;
     }
 
     void cycle() override
     {
+#ifdef ENVIRONMENT_SENSOR
         if (!environmentSensor.run())
             checkBsecStatus(environmentSensor);
         else
@@ -132,25 +139,26 @@ protected:
             onIAQChanged(iaq);
             previousIAQ = iaq;
         }
-        float temperature = envData.temperature_degF();
-        if ((int)(temperature*10) != (int)(previousTemperature*10)) // limit to a decimal digit precision for temp change
+        // look for 1°F change in temp, but keep values in °C
+        float temperature = envData.temperature;
+        if (abs(envData.to_degF(temperature)-envData.to_degF(previousTemperature)) >= 1) // limit to a decimal digit precision for temp change
         {
             previousTemperature = temperature;
-            onTemperatureChanged(temperature);
+            onTemperatureChanged(envData.temperature_degF());
         }
         float pressure = envData.pressure;
-        if ((int)(pressure*10) != (int)(previousPressure*10)) // limit to a decimal digit precision for temp change
+        if (abs(pressure-previousPressure) >= 1) // limit to a decimal digit precision for temp change
         {
             previousPressure = pressure;
             onPressureChanged(pressure);
         }
         float humidity = envData.humidity;
-        if ((int)(humidity*10) != (int)(previousHumidity*10)) // limit to a decimal digit precision for temp change
+        if (abs(humidity-previousHumidity) >= 1) // limit to a decimal digit precision for temp change
         {
             previousHumidity = humidity;
             onHumidityChanged(humidity);
         }
-
+#endif
     }
 
     virtual void onVeryUnhealthy(int iaq)
@@ -184,13 +192,18 @@ protected:
     }
 
 private:
+#ifdef ENVIRONMENT_SENSOR
     Bsec2 environmentSensor; // Interface with the BME-680
+#endif
     EnvironData envData;
     int previousIAQ = 0;
     float previousTemperature = 0.0;
     float previousPressure = 0.0;
     float previousHumidity = 0.0;
+#ifdef ENVIRONMENT_SENSOR
     static EnvironmentModule* instance;
+    EnvironmentModule* EnvironmentModule::instance = nullptr;
+
     static void newDataCallback(const bme68xData, const bsecOutputs outputs, Bsec2)
     {
         if (instance) {
@@ -273,8 +286,10 @@ private:
             if (bsec.status != BSEC_W_SC_CALL_TIMING_VIOLATION) say("BME68X warning code: %d", bsec.sensor.status);
         }
     }
+#endif
 };
-EnvironmentModule* EnvironmentModule::instance = nullptr;
+
+#ifdef ENVIRONMENT_SENSOR
 
 inline void EnvironData::update(const bsecOutputs& outputs)
 {
@@ -404,7 +419,6 @@ void EnvironData::outputData()
                   bVocEquivalents);
 #endif
 }
-
 // char *EnvironData::bme680Header()
 // {
 //     return (char *)"IAQ_Raw,Static_IAQ,IAQ_Accuracy,CO2_Equiv,BVOC_Equiv,Temp_C,Pressure_hPa,Humidity_pct,Adj_Gas_Ohms,Raw_Temp_C,Raw_Pressure_hPa,Raw_Humidity_pct,Raw_Gas_Ohms,InitialStabilization,GasReadingStable,Gas_Pct";
@@ -434,3 +448,4 @@ void EnvironData::outputData()
 //
 //     return buffer;
 // }
+#endif

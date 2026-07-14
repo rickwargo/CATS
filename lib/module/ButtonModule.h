@@ -4,7 +4,7 @@
 #include <Button2.h>
 
 #include <utility>
-#include "module/PinModule.h"
+#include "PinModule.h"
 #include "Event.h"
 
 class ButtonModule : public PinModule
@@ -61,8 +61,7 @@ protected:
 
     virtual void onTripleClick() {
         if (ctx.bus) {
-            ctx.bus->publish({Event::SystemReset, this});
-            // ctx.bus->publish({Event::ButtonTriple, this});
+            ctx.bus->publish({Event::ButtonTriple, this});
         }
     }
 

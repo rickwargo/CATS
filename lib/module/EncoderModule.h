@@ -7,12 +7,14 @@
 class EncoderModule : public Module
 {
 public:
+    const int STEP_COUNT = 192;
+
     EncoderModule(std::string name, short pinA, short pinB, short steps = 4)
         : Module(std::move(name)), pinA(pinA), pinB(pinB), steps(steps) {}
 
     virtual void onEncoderChanged(short delta)
     {
-        short value = encoder.readEncoder();
+        long value = encoder.readEncoder();
         if (delta && ctx.bus) {
             // say("[Encoder changed] value: %d, delta: %d", value, delta);
             // When a small motor is affixed to the dial, a haptic feedback response should be requested
@@ -32,23 +34,23 @@ protected:
         encoder.begin();
         setupEncoderISR();
 
-        encoder.setBoundaries(0, 191, true); //minValue, maxValue, circleValues true|false (when max go to min and vice versa)
-        encoder.setAcceleration(16);
+        encoder.setBoundaries(0, STEP_COUNT-1, false); //minValue, maxValue, circleValues true|false (when max go to min and vice versa)
+        encoder.setAcceleration(STEP_COUNT / 12);
         encoder.setEncoderValue(0);
 
         // The following two properties make the pin mode INPUT_PULLUP (defaults to INPUT_PULLDOWN).
         // This works as long as the GPIO pin is read/write. In the case where it is read-only
         // then a 10k resistor must be used to pull up the three pins.
         encoder.isButtonPulldown = false;
-        encoder.areEncoderPinsPulldownforEsp32 = true;
+        encoder.areEncoderPinsPulldownforEsp32 = false;
 
         return true;
     }
 
     void cycle() override
     {
-        short delta = encoder.encoderChanged();
-        if (delta) onEncoderChanged(delta);
+        long delta = encoder.encoderChanged();
+        if (delta) onEncoderChanged((short)delta);
     }
 
 private:

@@ -11,9 +11,9 @@ inline DependencyContext appContext{&bus};
 class Module {
 public:
     virtual ~Module() = default; // Makes the object polymorphic
-    static constexpr int DEFAULT_CYCLE_CHECK_MS = 50;
+    static constexpr unsigned int DEFAULT_CYCLE_CHECK_MS = 50;
 
-    Module(std::string name, unsigned long cycleCheckTime = DEFAULT_CYCLE_CHECK_MS)
+    Module(std::string name, unsigned int cycleCheckTime = DEFAULT_CYCLE_CHECK_MS)
         : moduleName(std::move(name)), cycleCheckTime(cycleCheckTime) {}
 
     [[nodiscard]] const char* getName() const { return !moduleName.empty() ? moduleName.c_str() : "UNDEFINED"; }
@@ -44,7 +44,7 @@ protected:
 
 private:
     bool initialized = false;
-    unsigned long cycleCheckTime;
+    unsigned int cycleCheckTime;
     unsigned long targetTime = 0; // Time for next action check
     std::string moduleName;
     time_t reInitTime = 0; // Time to attempt reinitialization if initialization fails

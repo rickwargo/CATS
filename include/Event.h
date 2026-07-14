@@ -3,6 +3,7 @@
 class Event {
     public:
     enum Type {
+        EventDiscarded,
         ButtonClick,
         ButtonLong,
         ButtonDouble,
@@ -23,14 +24,20 @@ class Event {
         YawChanged,
         PitchChanged,
         RollChanged,
+        ToggleMusic,
+        PreviousMusic,
+        NextMusic,
         SystemReset,
+        OTAUpdateRequest,
         LastType
     } type;
 
     void* source = nullptr;
+    // time_t timestamp = 0;
     int data = 0;
 
     const char *name[(int)LastType] = {
+        "Event Discarded",
         "Button Click",
         "Button Long",
         "Button Double",
@@ -51,6 +58,9 @@ class Event {
         "Yaw",
         "Pitch",
         "Roll",
+        "Toggle Music",
+        "Previous Music",
+        "Next Music",
         "System Reset"
     };
 

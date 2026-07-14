@@ -11,7 +11,7 @@ class HumidityFace : public FaceModule, ISubscriber
 public:
     HumidityFace(const char* name = "Humidity") : FaceModule(name) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         if (e.type == Event::HumidityChanged)
             measure.set(e.data / 10.0);

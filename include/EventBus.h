@@ -14,9 +14,10 @@ public:
     }
 
     void publish(const Event& e) {
+        Event event(e.type, e.source, e.data);
         for (int i = 0; i < count; i++) {
-            if (!subs[i]->ignoreEvents())
-                subs[i]->onEvent(e);
+            if (!subs[i]->ignoreEvents() && e.type != Event::EventDiscarded)
+                subs[i]->onEvent(event);
         }
     }
 

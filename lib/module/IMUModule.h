@@ -2,10 +2,10 @@
 
 #include <Arduino.h>
 #include "Event.h"
-#include "module/I2CModule.h"
+#include "I2CModule.h"
+#include "say.h"
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
-#include "say.h"
 
 /* OUTPUT FORMAT DEFINITION-------------------------------------------------------------------------------------------
 - Use "OUTPUT_READABLE_QUATERNION" for quaternion components in [w, x, y, z] format. Quaternion does not
@@ -37,11 +37,11 @@ reference frame. Yaw is relative if there is no magnetometer present.
 class IMUModule : public I2CModule
 {
 public:
-    IMUModule(std::string name, unsigned long cycleCheckTime) : I2CModule(name, cycleCheckTime)
+    IMUModule(std::string name, unsigned int cycleCheckTime) : I2CModule(name, cycleCheckTime)
     {
     }
 
-    // void onEvent(const Event& e) override
+    // void onEvent(Event& e) override
     // {
     //     switch (e.type)
     //     {
@@ -78,13 +78,6 @@ protected:
     }
 
 private:
-#ifdef IMU_INTERRUPT_PIN
-    int const INTERRUPT_PIN = IMU_INTERRUPT_PIN;  // Define the interruption #0 pin
-#endif
-    /* MPU6050 default I2C address is 0x68*/
-    MPU6050 imu;
-    //MPU6050 imu(0x69); //Use for AD0 high
-    //MPU6050 imu(0x68, &Wire1); //Use for AD0 low, but 2nd Wire (TWI/I2C) object.
     short previousYaw = 11111;      // these should never be larger than 360,
     short previousPitch = 11111;    //  so use a big number to ensure an event
     short previousRoll = 11111;     //  is invoked due to value change
@@ -92,11 +85,18 @@ private:
     bool blinkState;
 
     /*---MPU6050 Control/Status Variables---*/
-    unsigned short MPUIntStatus;   // Holds actual interrupt status byte from MPU
+    // unsigned short MPUIntStatus;   // Holds actual interrupt status byte from MPU
     unsigned short devStatus;      // Return status after each device operation (0 = success, !0 = error)
-    unsigned short packetSize;    // Expected DMP packet size (default is 42 bytes)
+    // unsigned short packetSize;    // Expected DMP packet size (default is 42 bytes)
     uint8_t FIFOBuffer[64]; // FIFO storage buffer
 
+#ifdef IMU_INTERRUPT_PIN
+    int const INTERRUPT_PIN = IMU_INTERRUPT_PIN;  // Define the interruption #0 pin
+#endif
+    /* MPU6050 default I2C address is 0x68*/
+    MPU6050 imu;
+    //MPU6050 imu(0x69); //Use for AD0 high
+    //MPU6050 imu(0x68, &Wire1); //Use for AD0 low, but 2nd Wire (TWI/I2C) object.
     /*---Orientation/Motion Variables---*/
     Quaternion q;           // [w, x, y, z]         Quaternion container
     VectorInt16 aa;         // [x, y, z]            Accel sensor measurements
@@ -130,25 +130,22 @@ private:
 #endif
 
         /*Initialize device*/
-        // say(F("Initializing I2C devices..."));
+        // say("Initializing I2C devices...");
         imu.initialize();
 #ifdef IMU_INTERRUPT_PIN
         pinMode(IMU_INTERRUPT_PIN, INPUT);
 #endif
 
         /*Verify connection*/
-        // say(F("Testing MPU6050 connection..."));
-        // if(imu.testConnection() == false){
+        // say("Testing MPU6050 connection...");
+        // if (imu.testConnection() == false) {
         //   say("MPU6050 connection failed");
-        //   // return false;
-        // }
-        // else {
-        //   say("MPU6050 connection successful");
+        //   return false;
         // }
 
         /*Wait for Serial input*/
         /* Initializate and configure the DMP*/
-        // say(F("Initializing DMP..."));
+        // say("Initializing DMP...");
         devStatus = imu.dmpInitialize();
 
         /* Supply your imu offsets here, scaled for min sensitivity */
@@ -163,22 +160,22 @@ private:
         if (devStatus == 0)
         {
             imu.CalibrateAccel(6); // Calibration Time: generate offsets and calibrate our MPU6050
-            imu.CalibrateGyro(6);
-            // say("These are the Active offsets: ");
-            // imu.PrintActiveOffsets();
-            // say(F("Enabling DMP..."));   //Turning ON DMP
+            imu.CalibrateGyro(26);
+            say("These are the Active offsets a(x, y, z) / g(x, y, z): ");
+            imu.PrintActiveOffsets();
+            // say("Enabling DMP...");   //Turning ON DMP
             imu.setDMPEnabled(true);
 
             /*Enable Arduino interrupt detection*/
-            // say(F("Enabling interrupt detection (Arduino external interrupt "));
+            // say("Enabling interrupt detection (Arduino external interrupt "));
             // say(digitalPinToInterrupt(INTERRUPT_PIN));
-            // say(F(")..."));
+            // say(")...");
             // attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), DMPDataReady, RISING);
             // MPUIntStatus = imu.getIntStatus();
 
             /* Set the DMP Ready flag so the main loop() function knows it is okay to use it */
-            // say(F("DMP ready! Waiting for first interrupt..."));
-            packetSize = imu.dmpGetFIFOPacketSize(); //Get expected DMP packet size for later comparison
+            // say("DMP ready! Waiting for first interrupt...");
+            // packetSize = imu.dmpGetFIFOPacketSize(); //Get expected DMP packet size for later comparison
         }
         else
         {

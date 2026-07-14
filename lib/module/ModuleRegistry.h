@@ -2,6 +2,10 @@
 
 #include <vector>
 #include <memory>
+#include "systemSetup.h"
+#if defined(VSPI_CLK) || defined(HSPI_CLK)
+#include <SPI.h>
+#endif
 
 class Module;
 
@@ -16,20 +20,27 @@ class Module;
  */
 class ModuleRegistry {
 public:
-    ModuleRegistry();
+    std::vector<Module*> modules;
+    bool needsWireInitialization = true;
+    bool needsVSPIInitialization = false;
+    bool needsHSPIInitialization = false;
+#ifdef VSPI_CLK
+    // say("[ModuleRegistry] Pre-setup. needsVSPIInitialization = %d", needsVSPIInitialization);
+    SPIClass vSPI = SPIClass(VSPI);
+#endif
+#ifdef HSPI_CLK
+    // say("[ModuleRegistry] Pre-setup. needsHSPIInitialization = %d", needsHSPIInitialization);
+    SPIClass hSPI = SPIClass(HSPI);
+#endif
 
+    ModuleRegistry();
     static ModuleRegistry& instance();
     void registerModule(Module& module);
     void unRegisterModule(Module& module);
     void setupAll();
     void cycleAll();
-
-    std::vector<Module*> modules;
-    bool needsWireInitialization = true;
-    bool needsVSPIInitialization = false;
-    bool needsHSPIInitialization = false;
+    bool initializeHardware();
 
 private:
     static constexpr int INITIAL_MODULES = 32;
-    void preSetupAll();
 };

@@ -4,14 +4,15 @@
 
 #include <utility>
 #include "Event.h"
-#include "module/PinModule.h"
+#include "PinModule.h"
+#include "say.h"
 
 class HapticModule : public PinModule, public ISubscriber
 {
 public:
     HapticModule(std::string name, short pin) : PinModule(std::move(name), pin) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         switch (e.type) {
         case Event::HapticFeedbackRequest:

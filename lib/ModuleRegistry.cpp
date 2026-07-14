@@ -1,5 +1,6 @@
-#include "module/ModuleRegistry.h"
+#include "ModuleRegistry.h"
 
+#include <HardwareSerial.h>
 #include <Wire.h>
 
 #include "Module.h"
@@ -25,42 +26,66 @@ void ModuleRegistry::registerModule(Module& module)
 
 void ModuleRegistry::unRegisterModule(Module& module)
 {
-    // std::erase(modules, &module);
+    std::erase(modules, &module);
     say("[ModuleRegistry] UnRegistered: %s", module.getName());
 }
 
-void ModuleRegistry::preSetupAll()
+bool ModuleRegistry::initializeHardware()
 {
-
+#ifdef I2C_SDA
     // say("[ModuleRegistry] Pre-setup. needsWireInitialization = %d", needsWireInitialization);
     if (needsWireInitialization)
     {
-        Wire.begin(I2C_SDA, I2C_SCL, I2C_BUS_FREQUENCY);
+        if (!Wire.begin(I2C_SDA, I2C_SCL, I2C_BUS_FREQUENCY))
+        {
+            Serial.println("[ERROR] Could not initialize I2C.");
+            return false;
+        }
     }
+#endif
+#ifdef VSPI_CLK
     // say("[ModuleRegistry] Pre-setup. needsVSPIInitialization = %d", needsVSPIInitialization);
+
     if (needsVSPIInitialization)
     {
-        // ctx.vspi.begin(VSPI_CLK, VSPI_MISO, VSPI_MOSI, -1);
+        // Caller must make sure to set the Slave Select pin as an output and
+        // keep it HIGH (deselected) for all SPI device during initialization
+
+        // Initialize VSPI with specific pins
+        if (!vSPI.begin(VSPI_CLK, VSPI_MISO, VSPI_MOSI, -1))
+        {
+            Serial.println("[ERROR] Could not initialize VSPI.");
+            return false;
+        }
     }
+#endif
+#ifdef HSPI_CLK
     // say("[ModuleRegistry] Pre-setup. needsHSPIInitialization = %d", needsHSPIInitialization);
     if (needsHSPIInitialization)
     {
-        // ctx.hspi = SPIClass(HSPI);
-        // hSPI.begin(HSPI_CLK, HSPI_MISO, HSPI_MOSI, -1);
+        // Caller must make sure to set the Slave Select pin as an output and
+        // keep it HIGH (deselected) for any SPI device during initialization
+
+        // Initialize HSPI with specific pins
+        if (!hSPI.begin(HSPI_CLK, HSPI_MISO, HSPI_MOSI, -1))
+        {
+            Serial.println("[ERROR] Could not initialize HSPI.");
+            return false;
+        }
     }
+#endif
+    return true;
 }
 
 void ModuleRegistry::setupAll()
 {
-    preSetupAll();
-
     say("[ModuleRegistry] Setting up %d modules...", modules.size());
     for (auto module : modules) {
         if (module)
         {
             say("  -> %s (%p)", module->getName() ? module->getName() : "UNKNOWN", module->getName());
             if (!module->moduleSetup())
-                unRegisterModule(*module);
+                unRegisterModule(*module);  // This should only be done if it can not be initialized again
         } else
         {
             say("Empty module");

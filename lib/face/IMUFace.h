@@ -11,7 +11,7 @@ class IMUFace : public FaceModule, ISubscriber
 public:
     IMUFace(const char* name = "Y/P/R") : FaceModule(name) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         if (e.type == Event::YawChanged)
             yaw.set(e.data);

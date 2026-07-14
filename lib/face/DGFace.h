@@ -9,9 +9,9 @@
 class DGFace : public FaceModule, ISubscriber
 {
 public:
-    DGFace(const char* name = "Directional Gyro", unsigned long cycleCheckTime = 100) : FaceModule(name, cycleCheckTime) {}
+    DGFace(const char* name = "Directional Gyro", unsigned int cycleCheckTime = 100) : FaceModule(name, cycleCheckTime) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         bool needsToRender = false;
         if (e.type == Event::YawChanged && e.data != yaw)

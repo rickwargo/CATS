@@ -10,21 +10,41 @@ class SystemModule : public Module, public ISubscriber
 public:
     SystemModule(std::string name) : Module(std::move(name)) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
-        // Dispatch System
+        static time_t lastEncoderEvent = 0;
+
+#if CORE_DEBUG_LEVEL >= 0
+        say("[Event System] type: %s, data: %d", e.getName(), e.data);
+#endif
+        // Event Dispatch System
         switch (e.type) {
-        // Lock in system-type functionality
+        case Event::ButtonTriple:
+            e.type = Event::SystemReset;    // not really necessary but documents a triple click induces a system reset
         case Event::SystemReset:
+            say("System reset requested (reason: #%d)", resetReasons[e.data]);
+#if CORE_DEBUG_LEVEL >= 3
+            // Give a bit of time to see this event before rebooting
+            delay(2000);
+#endif
             ESP.restart();
             break;
-        // And dispatch the other events
+        case Event::ButtonLong:
+            // If pressing and turning, ignore the long click event
+            e.type = Event::ToggleMusic;
+            // e.type = e.timestamp - lastEncoderEvent > 1000 ? Event::ToggleMusic : Event::EventDiscarded;
+            break;
+        case Event::ButtonDouble:
+            e.type = Event::NextMusic;
+            break;
+        case Event::EncoderCCW:
+        case Event::EncoderCW:
+            // lastEncoderEvent = e.timestamp;
+            break;
         default:
-            Event dispatch = dispatchEvent(e);
-            // ctx.bus->publish(dispatch);
             break;
         }
-    }
+}
 
 protected:
     bool setup() override
@@ -33,23 +53,10 @@ protected:
 
         return true;
     }
-
 private:
-
-    // This should dispatch to the active screen, and elsewhere as needed
-    Event dispatchEvent(const Event &event)
-    {
-        switch (event.type)
-        {
-        case Event::SystemReset:
-            say("System reset requested: reason: #%d", event.data);
-            ESP.restart();
-            break;
-        default:
-            // say("[dispatchEvent] event: %s, data: %d", event.getName(), event.data);
-            break;
-        }
-        return event;
-    }
-
+    const char *resetReasons[1] = {
+        "On demand reset"
+    };
 };
+
+// ctx.bus->publish({Event::ToggleMusic, this});

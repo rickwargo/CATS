@@ -4,9 +4,10 @@
 #include <NonBlockingRtttl.h>
 
 #include <utility>
-#include "module/PinModule.h"
+#include "PinModule.h"
+#include "say.h"
 
-class BuzzerModule : public PinModule
+class BuzzerModule : public PinModule, ISubscriber
 {
 public:
     BuzzerModule(std::string name, short pin) : PinModule(std::move(name), pin) {}
@@ -34,10 +35,27 @@ public:
     }
     const char *soundName() { return soundName(currentSound); }
 
+    void onEvent(Event& e) override
+    {
+        switch (e.type) {
+        case Event::ToggleMusic:
+            handleToggleMusic((short)e.data);
+            break;
+        case Event::PreviousMusic:
+            handlePreviousMusic((short)e.data);
+            break;
+        case Event::NextMusic:
+            handleNextMusic((short)e.data);
+            break;
+        default:
+            break;
+        }
+    }
+
 protected:
     bool setup() override
     {
-        // ctx.bus->subscribe(this);
+        ctx.bus->subscribe(this);
         pinMode(pin, OUTPUT);
         digitalWrite(pin, LOW);
 
@@ -70,14 +88,35 @@ private:
         {
             rtttl::stop();
             ledcDetach(pin);
+            say("Stop playing song #%d", currentSound+1);
         } else if (!rtttl::isPlaying() && canPlayNotes)
         {
-            while (currentSound < 0) currentSound += soundCount; // incase a large negative number is used to index
+            say("Playing song #%d", currentSound+1);
+            while (currentSound < 0) currentSound += soundCount; // in case a large negative number is used to index
             rtttl::begin(pin, sounds[currentSound % soundCount]);
         }
         else if (rtttl::isPlaying())
         {
             rtttl::play();
         }
+    }
+
+    void handleToggleMusic(short data)
+    {
+        soundToggle();
+    }
+    void handlePreviousMusic(short count = 1)
+    {
+        if (!count) count = 1;
+        if (currentSound == 0) currentSound = soundCount;   // loop from beginning to end by count
+        currentSound -= count;
+        say("Current sound is now #%d", currentSound+1);
+    }
+    void handleNextMusic(short count = 1)
+    {
+        if (!count) count = 1;
+        currentSound += count;
+        if (currentSound >= soundCount) currentSound %= count;   // loop from end to beginning by count
+        say("Current sound is now #%d", currentSound+1);
     }
 };

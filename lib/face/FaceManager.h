@@ -1,17 +1,17 @@
 #pragma once
 #include <vector>
 
-#include "module/FaceModule.h"
-#include "module/Module.h"
+#include "FaceModule.h"
+#include "Module.h"
 #include "ISubscriber.h"
 #include "Event.h"
 
 class FaceManager : public Module, public ISubscriber
 {
 public:
-    FaceManager(std::string name, unsigned long cycleCheckTime) : Module(std::move(name), cycleCheckTime) {}
+    FaceManager(std::string name, unsigned int cycleCheckTime) : Module(std::move(name), cycleCheckTime) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         switch (e.type) {
         case Event::EncoderCCW:

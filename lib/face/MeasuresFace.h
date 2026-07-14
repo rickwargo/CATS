@@ -11,7 +11,7 @@ class MeasuresFace : public FaceModule, ISubscriber
 public:
     MeasuresFace(const char* name) : FaceModule(name) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         switch (e.type)
         {

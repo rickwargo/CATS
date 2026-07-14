@@ -4,11 +4,12 @@
 
 #include <Arduino.h>
 #include <TFT_eSPI.h>
+#ifdef TEXTSCREEN
 #include <TFT_eSPI_Scroll.h>
-
+#endif
 #include <utility>
 #include "DependencyContext.h"
-#include "module/SPIModule.h"
+#include "SPIModule.h"
 
 #define FACE_BACKGROUND_COLOR_DEFAULT           TFT_NAVY
 #define FACE_FOREGROUND_COLOR_DEFAULT           TFT_CYAN
@@ -49,23 +50,6 @@ public:
     }
 #endif
 
-    virtual void say(const char* format, ...) {
-        char text[128];
-        va_list args;
-        va_start(args, format);  // Initialize args with the variable arguments
-        vsnprintf(text, sizeof(text), format, args);
-        va_end(args);
-        Serial.println(text);
-        Serial.flush();
-
-#ifdef TEXTSCREEN
-        if (mode == TextMode)
-        {
-            textScreen.write(text);
-        }
-#endif
-    }
-
 protected:
 #ifdef TEXTSCREEN
     TFT_eSPI_Scroll textScreen;     // Screen to print messages
@@ -73,7 +57,15 @@ protected:
 
     bool setup() override
     {
+#if TFT_RST > 0
+        pinMode(TFT_RST, OUTPUT);
+        digitalWrite(TFT_RST, LOW);
+        delay(50);
+        digitalWrite(TFT_RST, HIGH);
+        delay(50);
+#endif
         tft.init();
+
         ctx.display = &tft;                // Save this in context as soon as we know it
         ctx.sprite = new TFT_eSprite(&tft);
 

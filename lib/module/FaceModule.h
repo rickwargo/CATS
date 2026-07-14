@@ -2,7 +2,7 @@
 
 #include "Measure.h"
 #include "Module.h"
-#include "module/DisplayModule.h"
+#include "DisplayModule.h"
 
 // Sprite width and height
 #define FACE_RADIUS                 (TFT_WIDTH/2)
@@ -13,7 +13,7 @@ class FaceModule : public Module
 {
 public:
     FaceModule(std::string name) : Module(std::move(name)) { setCycleCheckTime(1000); }
-    FaceModule(std::string name, unsigned long cycleCheckTime) : Module(std::move(name), cycleCheckTime) {}
+    FaceModule(std::string name, unsigned int cycleCheckTime) : Module(std::move(name), cycleCheckTime) {}
 
     virtual bool ignoreEvents()
     {

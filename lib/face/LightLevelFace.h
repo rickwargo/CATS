@@ -11,7 +11,7 @@ class LightLevelFace : public FaceModule, ISubscriber
 public:
     LightLevelFace(const char* name = "Light Level") : FaceModule(name) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         if (e.type == Event::LightLevelChanged)
             measure.set(e.data);

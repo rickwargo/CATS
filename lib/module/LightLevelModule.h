@@ -4,7 +4,7 @@
 #include <SparkFun_VEML7700_Arduino_Library.h>
 
 #include <utility>
-#include "module/I2CModule.h"
+#include "I2CModule.h"
 #include "mathHelpers.h"
 
 class LightLevelModule : public I2CModule
@@ -21,10 +21,9 @@ protected:
     {
         if (lightLevelSensor.begin() == false)
         {
-            say("Unable to communicate with the VEML7700. Please check the wiring.");
+            Serial.printf(F("Unable to communicate with the VEML7700. Please check the wiring."));
             return false;
         }
-
         return true;
     }
 

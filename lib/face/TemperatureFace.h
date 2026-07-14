@@ -11,7 +11,7 @@ class TemperatureFace : public FaceModule, ISubscriber
 public:
     TemperatureFace(const char* name = "Temperature") : FaceModule(name) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         if (e.type == Event::TemperatureChanged)
             measure.set(e.data / 10.0);

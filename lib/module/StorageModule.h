@@ -1,9 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
-#include <TimeLib.h>
-#include <SdFat.h>
-#include "module/SPIModule.h"
+#include "SPIModule.h"
 #include "say.h"
 
 class StorageModule : public SPIModule
@@ -23,30 +21,25 @@ protected:
     }
 
 private:
-    SdFat sd_fat; // SD filesystem object
-    SdFile file; // File object
+    // File file;
 
     void sdError(const char* msg)
     {
         say("error: %s", msg);
 
-        if (file.isOpen()) file.close();
-        // sd_fat.end();
+        // if (file.isOpen()) file.close();
 
         tryToRecoverFromError();
     }
 
     bool initSdCard()
     {
-        // Initialize at the highest speed supported by the board that is
-        // not over 50 MHz. Try a lower speed if SPI errors occur.
-        SPIClass& spi = TFT_eSPI::getSPIinstance();  // Create a class variable to hold the SPI class instance
+        // Initialize SD card. Default SPI pins are used: SCK=18, MISO=19, MOSI=23, CS=5
+        // if (!SD.begin(SD_CS)) {
+        //     Serial.println("Card Mount Failed");
+        //     return false;
+        // }
 
-        if (!sd_fat.begin(SdSpiConfig(SD_CS, SHARED_SPI, VSPI_FREQUENCY, &spi)))
-        {
-            sdError("Failed to access SD card");
-            return false;
-        }
         return true;
     }
 
@@ -59,30 +52,30 @@ private:
 
     bool initFile()
     {
-        snprintf(filename, sizeof(filename), "%s-%02d%02d%02d%02d%02d.csv", FILE_BASE_NAME, year() % 100, month(), day(), hour(), minute());
+        // snprintf(filename, sizeof(filename), "%s-%02d%02d%02d%02d%02d.csv", FILE_BASE_NAME, year() % 100, month(), day(), hour(), minute());
 
         // Open the file for writing
-        if (!file.open(filename, O_WRONLY | O_CREAT))
-        {
-            sdError("File open failed.");
-            return false;
-        }
-        say("Logging to: %s", filename);
+        // if (!file.open(filename, O_WRONLY | O_CREAT))
+        // {
+        //     sdError("File open failed.");
+        //     return false;
+        // }
+        // say("Logging to: %s", filename);
         return true;
     }
 
     bool writeHeader()
     {
         // Write CSV header
-        file.printf("Time,%s\n", "Dummy");
+        // file.printf("Time,%s\n", "Dummy");
 
         // Force data to SD and update the directory entry to avoid data loss.
-        if (!file.sync() || file.getWriteError())
-        {
-            sdError("header write error");
-            return false;
-        }
-        file.close();
+        // if (!file.sync() || file.getWriteError())
+        // {
+        //     sdError("header write error");
+        //     return false;
+        // }
+        // file.close();
         return true;
     }
 
@@ -120,17 +113,17 @@ private:
 
         try
         {
-            time_t timeNow = now();
+            time_t timeNow = millis();
 
-            if (file.open(filename, O_WRONLY | O_APPEND | O_SYNC))
-            {
-                file.printf("%lld,%s\n", timeNow, currentExportData);
-                file.close();
-            }
-            else
-            {
-                sdError("File open failed attempting to append export data.");
-            }
+            // if (file.open(filename, O_WRONLY | O_APPEND | O_SYNC))
+            // {
+            //     file.printf("%lld,%s\n", timeNow, currentExportData);
+            //     file.close();
+            // }
+            // else
+            // {
+            //     sdError("File open failed attempting to append export data.");
+            // }
         }
         catch (const std::exception& e)
         {

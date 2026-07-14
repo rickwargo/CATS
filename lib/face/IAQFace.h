@@ -11,7 +11,7 @@ class IAQFace : public FaceModule, ISubscriber
 public:
     IAQFace(const char* name = "IAQ") : FaceModule(name) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         if (e.type == Event::IAQChanged)
             measure.set(e.data);

@@ -9,9 +9,9 @@
 class AutoFace : public FaceModule, ISubscriber
 {
 public:
-    AutoFace(const char* name = "Auto Direction", unsigned long cycleCheckTime = 100) : FaceModule(name, cycleCheckTime) {}
+    AutoFace(const char* name = "Auto Direction", unsigned int cycleCheckTime = 100) : FaceModule(name, cycleCheckTime) {}
 
-    void onEvent(const Event& e) override
+    void onEvent(Event& e) override
     {
         // say("[onEvent %p] %s, data = %d", e.source, e.getName(), e.data);
         bool needsToRender = false;

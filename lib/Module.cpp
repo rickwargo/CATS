@@ -1,7 +1,6 @@
-#include "module/Module.h"
+#include "Module.h"
 
 #include <Arduino.h>
-#include <TimeLib.h>
 
 #include "say.h"
 
@@ -43,10 +42,10 @@ void Module::moduleCycle()
         {
             say("[Module ERROR] %s is NOT initialized", getName());
             reInitCount++;  // To end the slew of first time error messages
-            reInitTime = now() + reInitDelay; // Retry after X seconds
+            reInitTime = millis() + reInitDelay; // Retry after X seconds
         }
 
-        if (now() >= reInitTime)
+        if (millis() >= reInitTime)
         {
             if (++reInitCount > 0)
                 say("[%s] attempt #%d to re-initialize module", getName(), reInitCount);
@@ -62,7 +61,7 @@ void Module::moduleCycle()
             {
                 if (reInitCount % 5 == 0) reInitDelay *= 2; // Exponential backoff
                 if (reInitDelay > 900) reInitDelay = 900; // Cap at 15 minutes
-                reInitTime = now() + reInitDelay; // Retry after X seconds
+                reInitTime = millis() + reInitDelay; // Retry after X seconds
             }
         }
     }

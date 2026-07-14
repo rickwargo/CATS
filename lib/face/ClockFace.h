@@ -29,7 +29,7 @@
 class ClockFace : public FaceModule
 {
 public:
-    ClockFace(const char* name, unsigned long cycleCheckTime) : FaceModule(std::move(name), cycleCheckTime) {}
+    ClockFace(const char* name, unsigned int cycleCheckTime) : FaceModule(std::move(name), cycleCheckTime) {}
 
 protected:
     bool setup() override

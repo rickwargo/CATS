@@ -47,8 +47,8 @@ protected:
 private:
     time_t toLocalTime(const time_t utc)
     {
-        constexpr TimeChangeRule usEDT = {"EDT", Second, Sun, Mar, 2, -240}; // UTC - 4 hours
-        constexpr TimeChangeRule usEST = {"EST", First, Sun, Nov, 2, -300};  // UTC - 5 hours
+        TimeChangeRule usEDT = {"EDT", Second, Sun, Mar, 2, -240}; // UTC - 4 hours
+        TimeChangeRule usEST = {"EST", First, Sun, Nov, 2, -300};  // UTC - 5 hours
 
         Timezone usEastern(usEDT, usEST);
         return usEastern.toLocal(utc);

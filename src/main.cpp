@@ -10,8 +10,8 @@ void setup() {
     Serial.println(F("[CATS] Starting up... "));
 
 #if CORE_DEBUG_LEVEL > 4
-    Serial.println(F("[CATS] Sleeping for 5 seconds to give serial monitor a chance to connect... "));
-    delay(5000);    // give a chance for the serial monitor to display
+    // Serial.println(F("[CATS] Sleeping for 5 seconds to give serial monitor a chance to connect... "));
+    // delay(5000);    // give a chance for the serial monitor to display
 
     Serial.println(F("\n================================"));
     Serial.println(F("ESP32 IoT System - Initializing"));

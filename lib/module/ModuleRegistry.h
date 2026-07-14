@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <memory>
+#include <Processors/TFT_eSPI_ESP32_S3.h>
+
 #include "systemSetup.h"
 #if defined(VSPI_CLK) || defined(HSPI_CLK)
 #include <SPI.h>

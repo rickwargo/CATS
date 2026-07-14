@@ -208,7 +208,7 @@ void loadModules()
 #if defined(LIGHT_LEVEL_SENSOR)
     registry.registerModule(lightLevelFace);
 #endif
-#if defined(LIGHT_LEVEL_SENSOR) || defined(IMU_SENSOR) || defined(ENVIRONMENT_SENSOR))
+#if defined(LIGHT_LEVEL_SENSOR) || defined(IMU_SENSOR) || defined(ENVIRONMENT_SENSOR)
     registry.registerModule(measuresFace);
 #endif
 #endif

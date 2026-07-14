@@ -9,4 +9,5 @@
 ### Enhancements
  - WiFi first then WiFiMulti to improve startup time
  - Pass different data based on event type
- - Dynamically load and unload modules (low)
+#### Done
+ * [✓] Dynamically load and unload modules (low) 

@@ -1,8 +1,6 @@
 #pragma once
 
-#ifdef ENVIRONMENT_SENSOR
 #include <bsec2.h>
-#endif
 
 #include "I2CModule.h"
 #include "Event.h"
@@ -26,10 +24,8 @@
 // For example, when using popular integrations like ESPHome or standard Arduino BSEC,
 // you define your rate via the configuration object or initialization function.
 
-#ifdef IMU_SENSOR
 #define SAMPLE_RATE		 BSEC_SAMPLE_RATE_LP
 // #define SAMPLE_RATE		 BSEC_SAMPLE_RATE_ULP
-#endif
 
 
 inline const char* accuracyStatus[] = {
@@ -54,45 +50,42 @@ inline const char* iaqIndexStatus[] = {
     "Extremely polluted",
 };
 
-
 class EnvironData
 {
 public:
-    float iaqRaw;
-    short staticIaq;
-    unsigned short iaqAccuracy;
-    float co2Equivalents;
-    float bVocEquivalents;
-    float temperature;
-    float pressure;
-    float humidity;
-    float gasSensorResistance;
-    float rawTemperature;
-    float rawPressure;
-    float rawHumidity;
-    float rawGasSensorResistance;
-    int initialStabilization;
-    int gasReadingStabilized;
-    float gasPercentage;
-    int64_t time_stamp;
+    float iaqRaw = 0;
+    short staticIaq = 0;
+    unsigned short iaqAccuracy = 0;
+    float co2Equivalents = 0;
+    float bVocEquivalents = 0;
+    float temperature = 0;
+    float pressure = 0;
+    float humidity = 0;
+    float gasSensorResistance = 0;
+    float rawTemperature = 0;
+    float rawPressure = 0;
+    float rawHumidity = 0;
+    float rawGasSensorResistance = 0;
+    int initialStabilization = 0;
+    int gasReadingStabilized = 0;
+    float gasPercentage = 0;
+    int64_t time_stamp = 0;
 
-#ifdef ENVIRONMENT_SENSOR
     void update(const bsecOutputs& outputs);
     void outputData();
-#endif
     // report a good value, but only when it has stabilized
-    short iaq() const { return gasReadingStabilized ? staticIaq : -1; }
+    [[nodiscard]] short iaq() const { return gasReadingStabilized ? staticIaq : -1; }
 
     // Convert from hPa (millibars) to inHg
-    float to_inHg(float p) const { return p * 0.02952998057228; }
-    float pressure_inHg() const { return to_inHg(pressure); }
+    static float to_inHg(float p) { return p * 0.02952998057228; }
+    [[nodiscard]] float pressure_inHg() const { return to_inHg(pressure); }
 
     // convert to degrees Fahrenheit
-    float to_degF(float t) const { return t * 9.0 / 5.0 + 32.0; }
-    float temperature_degF() const { return to_degF(temperature); }
+    static float to_degF(float t) { return t * 9.0 / 5.0 + 32.0; }
+    [[nodiscard]] float temperature_degF() const { return to_degF(temperature); }
 
     // convert to kOhms
-    float gasSensorResistance_kOhms() const
+    [[nodiscard]] float gasSensorResistance_kOhms() const
     {
         return gasReadingStabilized ? pow(10, gasSensorResistance) / 1000 : -1;
     }
@@ -105,31 +98,55 @@ private:
 
 class EnvironmentModule : public I2CModule
 {
+    float iaqRaw = 0;
+    short staticIaq = 0;
+    unsigned short iaqAccuracy = 0;
+    float co2Equivalents = 0;
+    float bVocEquivalents = 0;
+    float temperature = 0;
+    float pressure = 0;
+    float humidity = 0;
+    float gasSensorResistance = 0;
+    float rawTemperature = 0;
+    float rawPressure = 0;
+    float rawHumidity = 0;
+    float rawGasSensorResistance = 0;
+    int initialStabilization = 0;
+    int gasReadingStabilized = 0;
+    float gasPercentage = 0;
+    int64_t time_stamp = 0;
+    // report a good value, but only when it has stabilized
+    [[nodiscard]] short stabilizedIaq() const { return gasReadingStabilized ? staticIaq : -1; }
+    // Convert from hPa (millibars) to inHg
+    static float to_inHg(float p) { return p * 0.02952998057228; }
+    [[nodiscard]] float pressure_inHg() const { return to_inHg(pressure); }
+    // convert to degrees Fahrenheit
+    static float to_degF(float t) { return t * 9.0 / 5.0 + 32.0; }
+    [[nodiscard]] float temperature_degF() const { return to_degF(temperature); }
+    // convert to kOhms
+    [[nodiscard]] float gasSensorResistance_kOhms() const
+    {
+        return gasReadingStabilized ? pow(10, gasSensorResistance) / 1000 : -1;
+    }
+
 public:
-    EnvironmentModule(std::string name, unsigned int cycleCheckTime) : I2CModule(std::move(name), cycleCheckTime), envData()
+    EnvironmentModule(std::string name, unsigned int cycleCheckTime) : I2CModule(std::move(name), cycleCheckTime)
     {
     }
 
 protected:
     bool setup() override
     {
-#ifdef ENVIRONMENT_SENSOR
-        instance = this;
-
         if (!bme680Setup()) return false;
-#endif
         return true;
     }
 
     void cycle() override
     {
-#ifdef ENVIRONMENT_SENSOR
         if (!environmentSensor.run())
             checkBsecStatus(environmentSensor);
-        else
-            envData.outputData();
 
-        int iaq = envData.iaq();
+        int iaq = stabilizedIaq();
         if (previousIAQ <= 200 && iaq > 200)
             onVeryUnhealthy(iaq);
         else if (previousIAQ > 200 && iaq <= 100)
@@ -140,25 +157,21 @@ protected:
             previousIAQ = iaq;
         }
         // look for 1°F change in temp, but keep values in °C
-        float temperature = envData.temperature;
-        if (abs(envData.to_degF(temperature)-envData.to_degF(previousTemperature)) >= 1) // limit to a decimal digit precision for temp change
+        if (abs(to_degF(temperature)-to_degF(previousTemperature)) >= 1) // limit to a decimal digit precision for temp change
         {
             previousTemperature = temperature;
-            onTemperatureChanged(envData.temperature_degF());
+            onTemperatureChanged(temperature_degF());
         }
-        float pressure = envData.pressure;
         if (abs(pressure-previousPressure) >= 1) // limit to a decimal digit precision for temp change
         {
             previousPressure = pressure;
             onPressureChanged(pressure);
         }
-        float humidity = envData.humidity;
         if (abs(humidity-previousHumidity) >= 1) // limit to a decimal digit precision for temp change
         {
             previousHumidity = humidity;
             onHumidityChanged(humidity);
         }
-#endif
     }
 
     virtual void onVeryUnhealthy(int iaq)
@@ -171,49 +184,41 @@ protected:
         ctx.bus->publish({Event::IAQModerate, this, iaq});
     }
 
-    virtual void onTemperatureChanged(float temperature)
+    virtual void onTemperatureChanged(float newTemperature)
     {
-        ctx.bus->publish({Event::TemperatureChanged, this, (int)(temperature*10)});
+        ctx.bus->publish({Event::TemperatureChanged, this, (int)(newTemperature*10)});
     }
 
-    virtual void onIAQChanged(int iaq)
+    virtual void onIAQChanged(int newIaq)
     {
-        ctx.bus->publish({Event::IAQChanged, this, iaq});
+        ctx.bus->publish({Event::IAQChanged, this, newIaq});
     }
 
-    virtual void onPressureChanged(float pressure)
+    virtual void onPressureChanged(float newPressure)
     {
-        ctx.bus->publish({Event::PressureChanged, this, (int)(pressure*10)});
+        ctx.bus->publish({Event::PressureChanged, this, (int)(newPressure*10)});
     }
 
-    virtual void onHumidityChanged(float humidity)
+    virtual void onHumidityChanged(float newHumidity)
     {
-        ctx.bus->publish({Event::HumidityChanged, this, (int)(humidity*10)});
+        ctx.bus->publish({Event::HumidityChanged, this, (int)(newHumidity*10)});
     }
 
 private:
-#ifdef ENVIRONMENT_SENSOR
     Bsec2 environmentSensor; // Interface with the BME-680
-#endif
-    EnvironData envData;
     int previousIAQ = 0;
     float previousTemperature = 0.0;
     float previousPressure = 0.0;
     float previousHumidity = 0.0;
-#ifdef ENVIRONMENT_SENSOR
-    static EnvironmentModule* instance;
-    EnvironmentModule* EnvironmentModule::instance = nullptr;
 
     static void newDataCallback(const bme68xData, const bsecOutputs outputs, Bsec2)
     {
-        if (instance) {
-            instance->handleNewData(outputs);
-        }
+        // handleNewData(outputs);
     }
 
     void handleNewData(const bsecOutputs& outputs)
     {
-        envData.update(outputs);
+        // envData.update(outputs);
     }
 
     bool bme680Setup()
@@ -286,10 +291,7 @@ private:
             if (bsec.status != BSEC_W_SC_CALL_TIMING_VIOLATION) say("BME68X warning code: %d", bsec.sensor.status);
         }
     }
-#endif
 };
-
-#ifdef ENVIRONMENT_SENSOR
 
 inline void EnvironData::update(const bsecOutputs& outputs)
 {
@@ -301,79 +303,79 @@ inline void EnvironData::update(const bsecOutputs& outputs)
         switch (output.sensor_id)
         {
         case BSEC_OUTPUT_IAQ:
-            // if (output.signal != iaq())
-            // {
-            //     say("[IAQ]\t\t%d", (unsigned short)output.signal);
-            //     say("[IAQ Accuracy]\t%s", iaqAccuracyIndicator[output.accuracy]);
-            // }
+            if (output.signal != iaq())
+            {
+                say("[IAQ]\t\t%d", (unsigned short)output.signal);
+                say("[IAQ Accuracy]\t%s", iaqAccuracyIndicator[output.accuracy]);
+            }
             time_stamp = output.time_stamp;
             iaqAccuracy = output.accuracy;
             iaqRaw = gasReadingStabilized ? output.signal : -1;
             break;
         case BSEC_OUTPUT_STATIC_IAQ:
-            // if ((unsigned short)output.signal != staticIaq)
-            //     say("[s-IAQ]\t\t%f", output.signal);
+            if ((unsigned short)output.signal != staticIaq)
+                say("[s-IAQ]\t\t%f", output.signal);
             staticIaq = gasReadingStabilized ? (unsigned short)output.signal : -1;
             break;
         case BSEC_OUTPUT_CO2_EQUIVALENT:
-            // if (output.signal != co2Equivalents)
-            //     say("[CO2]\t\t%f", output.signal);
+            if (output.signal != co2Equivalents)
+                say("[CO2]\t\t%f", output.signal);
             co2Equivalents = gasReadingStabilized ? output.signal : -1;
             break;
         case BSEC_OUTPUT_BREATH_VOC_EQUIVALENT:
-            // if (output.signal != bVocEquivalents)
-            //     say("[b-VOC]\t\t%f", output.signal);
+            if (output.signal != bVocEquivalents)
+                say("[b-VOC]\t\t%f", output.signal);
             bVocEquivalents = gasReadingStabilized ? output.signal : -1;
             break;
         case BSEC_OUTPUT_RAW_HUMIDITY:
-            // if (output.signal != rawHumidity)
-            //     say("[Humidity]\t%f", output.signal);
+            if (output.signal != rawHumidity)
+                say("[Humidity]\t%f", output.signal);
             rawHumidity = output.signal;
             break;
         case BSEC_OUTPUT_STABILIZATION_STATUS:
-            // if (output.signal != initialStabilization)
-            //     say("[Initialized]\t%f", output.signal);
+            if (output.signal != initialStabilization)
+                say("[Initialized]\t%f", output.signal);
             initialStabilization = output.signal;
             break;
         case BSEC_OUTPUT_RUN_IN_STATUS:
-            // if (output.signal != gasReadingStabilized)
-            //     say("[Stable]\t\t%f", output.signal);
+            if (output.signal != gasReadingStabilized)
+                say("[Stable]\t\t%f", output.signal);
             gasReadingStabilized = output.signal;
             break;
         case BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY:
-            // if (output.signal != humidity)
-            //     say("[adjHumidity]\t%f", output.signal);
+            if (output.signal != humidity)
+                say("[adjHumidity]\t%f", output.signal);
             humidity = output.signal;
             break;
         case BSEC_OUTPUT_COMPENSATED_GAS:
-            // if (output.signal != gasSensorResistance)
-            //     say("[adjGasRes]\t%f", output.signal);
+            if (output.signal != gasSensorResistance)
+                say("[adjGasRes]\t%f", output.signal);
             gasSensorResistance = gasReadingStabilized ? output.signal : -1;
             break;
         case BSEC_OUTPUT_RAW_TEMPERATURE:
-            // if (output.signal != rawTemperature)
-            //     say("[Temp °C]\t%f", output.signal);
+            if (output.signal != rawTemperature)
+                say("[Temp °C]\t%f", output.signal);
             rawTemperature = output.signal;
             break;
         case BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_TEMPERATURE:
-            // if (output.signal != temperature)
-            //     say("[adjTemp °C]\t%f", output.signal);
+            if (output.signal != temperature)
+                say("[adjTemp °C]\t%f", output.signal);
             temperature = output.signal;
             break;
         case BSEC_OUTPUT_RAW_PRESSURE:
-            // if (output.signal != rawPressure)
-            //     say("[Pressure]\t%f", output.signal);
+            if (output.signal != rawPressure)
+                say("[Pressure]\t%f", output.signal);
             rawPressure = output.signal;
             pressure = output.signal; // in hectoPascals (hPa), 1 hPa = 0.02952998057228 inHg
             break;
         case BSEC_OUTPUT_RAW_GAS:
-            // if (output.signal != rawGasSensorResistance)
-            //     say("[GasRes]\t\t%f", output.signal);
+            if (output.signal != rawGasSensorResistance)
+                say("[GasRes]\t\t%f", output.signal);
             rawGasSensorResistance = output.signal;
             break;
         case BSEC_OUTPUT_GAS_PERCENTAGE:
-            // if (output.signal != gasPercentage)
-            //     say("[gasPct]\t\t%f", output.signal);
+            if (output.signal != gasPercentage)
+                say("[gasPct]\t\t%f", output.signal);
             gasPercentage = gasReadingStabilized ? output.signal : -1;
             break;
         default:
@@ -381,71 +383,3 @@ inline void EnvironData::update(const bsecOutputs& outputs)
         }
     }
 }
-
-void EnvironData::outputData()
-{
-    static uint32_t targetTime = 0; // Time for next output of data
-
-    if (millis() < targetTime || pressure == 0) // invalid reading if pressure is zero
-        return;
-    targetTime = millis() + 37000;
-
-#ifdef WEATHER_NOW
-    say("====== Weather Now ======");
-    say("Offset:      %.1f sec", time_stamp / 1000000000.0);
-    if (gasReadingStabilized)
-        say("IAQ:         %d", iaq());
-    say("Temperature: %.1f F", temperature_degF());
-    say("Humidity:    %.1f%%", humidity);
-    say("Pressure:    %.2f hPa", pressure);
-    if (gasReadingStabilized)
-        say("Gas:         %.3f kOhms", gasSensorResistance_kOhms());
-    if (gasReadingStabilized)
-        say("Gas %%:       %.1f%%", gasPercentage);
-    if (gasReadingStabilized)
-        say("CO2:         %.1f ppm", co2Equivalents);
-    if (gasReadingStabilized)
-        say("b-VOC:       %.2f", bVocEquivalents);
-
-    say("[%.1f] IAQ %d: %.1fF / %.1f%% / %.1fhPa / %.1fkOhms (%.1f%%) / %.1fppm / bVOC %.2f",
-                  time_stamp / 1000000000.0, // nanoseconds --> seconds
-                  iaq(),
-                  temperature_degF(),
-                  humidity,
-                  pressure,
-                  gasSensorResistance_kOhms(),
-                  gasPercentage,
-                  co2Equivalents,
-                  bVocEquivalents);
-#endif
-}
-// char *EnvironData::bme680Header()
-// {
-//     return (char *)"IAQ_Raw,Static_IAQ,IAQ_Accuracy,CO2_Equiv,BVOC_Equiv,Temp_C,Pressure_hPa,Humidity_pct,Adj_Gas_Ohms,Raw_Temp_C,Raw_Pressure_hPa,Raw_Humidity_pct,Raw_Gas_Ohms,InitialStabilization,GasReadingStable,Gas_Pct";
-// }
-//
-// char *EnvironData::bme680ExportData()
-// {
-//     static char buffer[512];
-//     snprintf(buffer, sizeof(buffer),
-//         "%.2f,%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%.2f",
-//         iaqRaw,
-//         staticIaq,
-//         iaqAccuracy,
-//         co2Equivalents,
-//         bVocEquivalents,
-//         temperature,
-//         pressure,
-//         humidity,
-//         gasSensorResistance,
-//         rawTemperature,
-//         rawPressure,
-//         rawHumidity,
-//         rawGasSensorResistance,
-//         initialStabilization,
-//         gasReadingStabilized,
-//         gasPercentage);
-//
-//     return buffer;
-// }
-#endif

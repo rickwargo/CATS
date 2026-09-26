@@ -1,0 +1,12 @@
+CATS-backups/
+cats
+fp-info-cache
+freerouting.dsn
+temp-freerouting.dsn
+~*
+.DS_Store
+.history
+.vscode
+Plot/
+*-backups/
+*_backups_*

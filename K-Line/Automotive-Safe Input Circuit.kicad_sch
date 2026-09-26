@@ -1,0 +1,1359 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "0b1c9291-1cd8-431c-aa7c-2a9d462c7b18")
+	(paper "A4")
+	(lib_symbols
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:D_Zener"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "D_Zener"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Zener diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "D_Zener_0_1"
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy -1.27 1.27) (xy -0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "D_Zener_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "power:GND"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "GND_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GND_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(rectangle
+		(start 38.1 29.21)
+		(end 105.41 72.39)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid "3fb08028-b86c-40cf-80a6-676f2aaab824")
+	)
+	(text "+12V Automotive-Input Protective Circuit"
+		(exclude_from_sim no)
+		(at 39.37 27.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left)
+		)
+		(uuid "ce95043e-c6ec-4053-b4e4-93be3a94cc3a")
+	)
+	(text "Why? Notes"
+		(exclude_from_sim no)
+		(at 119.38 26.67 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left)
+		)
+		(uuid "e997b2b8-89f8-41c3-9013-a362c26ddee5")
+	)
+	(text_box "Vehicle electrical systems suffer from massive voltage transients (like load dumps) that spike up to +60V or dip down to -100V. If a car relay or alternator creates a +60V spike, your divider will output over 10.5V directly into your ESP32's 3.3V tolerant pins, permanently destroying the microcontroller.\n\nWhy This Design Protects Your BoardHigher Resistance (\\(10\\text{k}\\Omega / 10\\text{k}\\Omega\\)): This splits a standard 12V-14.4V car signal exactly in half, delivering a clean 6V to 7.2V to the middle node. The 3.3V Zener Diode: This is your primary defense. It will cleanly slice off anything above 3.3V and dump it to ground, ensuring the GPIO pin never sees a lethal voltage. The 3.3kΩ Series Resistor: This inline resistor limits any leftover transient current before it reaches the ESP32 pin, allowing the chip's internal ESD protection diodes to do their job without burning up. The 100nF Capacitor (Optional): Brake pedals, clutches, and handbrakes use mechanical switches that \"bounce\" (rapidly turn on/off for a few milliseconds) when pressed. This capacitor acts as a hardware noise filter, smoothing out the signal so your code doesn't get confused by phantom button presses. \n\nBased on these numbers, standard ultra-tiny SMD resistors (like 0402 or 0603) will handle daily driving easily, but could physically crack or burn up during a prolonged high-voltage spike. For a robust automotive layout in KiCad, select these exact component packages: Resistor 1 (The \\(10\\text{k}\\Omega\\) connected to 12V Input): Use a 1206 package size rated for at least \\(0.25\\text{W}\\) (1/4 Watt) or \\(0.5\\text{W}\\). The larger physical footprint provides better thermal mass and a higher voltage breakdown rating to withstand spikes. Resistor 2 (The \\(10\\text{k}\\Omega\\) connected to Ground): You can safely use a standard 0805 or 0603 package size, as the Zener diode protects this half of the circuit by clamping the voltage node to \\(3.3\\text{V}\\). Resistor 3 (The \\(3.3\\text{k}\\Omega\\) Inline Resistor): A standard 0603 package is perfect here. It sees negligible current because the ESP32 GPIO pin is a high-impedance input. The Zener Diode: Choose a standard \\(3.3\\text{V}\\) Zener rated for \\(500\\text{mW}\\) (such as a BZT52C3V3 in a SOD-123 surface-mount package). \n\nLayout Tip: When drawing this layout on your board, keep the traces between the 12V input car connector and the first \\(10\\text{k}\\Omega\\) resistor slightly wider (around 0.4mm to 0.5mm) to help dissipate any transient thermal energy into the board's copper layers. "
+		(exclude_from_sim no)
+		(at 118.11 27.94 0)
+		(size 106.68 88.2768)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(face "Manrope ExtraLight")
+				(size 1.651 1.651)
+				(color 72 72 72 1)
+			)
+			(justify left top)
+		)
+		(uuid "06cfc9f6-9a77-4cbd-8c98-b711514633fc")
+	)
+	(junction
+		(at 71.12 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8ade9a2a-1b3f-4595-9c49-2db3a02d0277")
+	)
+	(wire
+		(pts
+			(xy 57.15 35.56) (xy 62.23 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3520bff2-547f-4fa8-becc-b80ee199f024")
+	)
+	(wire
+		(pts
+			(xy 80.01 35.56) (xy 83.82 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "acb35328-039e-4895-9d46-fb83e917e7fd")
+	)
+	(wire
+		(pts
+			(xy 69.85 35.56) (xy 71.12 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4153a31-7988-4fc2-be4e-a93cf74618a8")
+	)
+	(wire
+		(pts
+			(xy 71.12 36.83) (xy 71.12 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c5ea49d3-60c7-4ed8-80ec-aa2f87f422e8")
+	)
+	(wire
+		(pts
+			(xy 71.12 44.45) (xy 71.12 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e14d6323-1976-4cba-b0ba-513c5cd8d637")
+	)
+	(wire
+		(pts
+			(xy 71.12 35.56) (xy 72.39 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ed6d52f4-3433-4667-9e14-b490abeff9f2")
+	)
+	(hierarchical_label "GPIO_PIN"
+		(shape input)
+		(at 83.82 35.56 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3d2d3b78-d846-4f6e-b083-9101e38d3f78")
+	)
+	(hierarchical_label "+12V_INPUT"
+		(shape input)
+		(at 57.15 35.56 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a6a9f7ec-e0ac-463a-820e-cc1367ae71d6")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 76.2 35.56 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp yes)
+		(uuid "03a98243-7c4e-47da-b0f8-793c4ab383d7")
+		(property "Reference" "R17"
+			(at 77.47 38.1 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "3K3"
+			(at 77.47 35.56 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
+			(at 76.2 37.338 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 76.2 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 76.2 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d5a09e15-e159-4b23-821b-0221f323cc28")
+		)
+		(pin "2"
+			(uuid "a1c9388a-0a6b-40d5-863c-ad4bc091dbd2")
+		)
+		(instances
+			(project "K-Line"
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/216955d4-43a2-4933-8652-9c30fda298f5"
+					(reference "R17")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/31c8c698-4198-4dfc-8879-40b66d03fd67"
+					(reference "R26")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/6ceccfeb-eef4-456a-ba91-251819f6dbf3"
+					(reference "R35")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/7c74b53f-8d18-48bc-bf2d-e1fbb3edd64d"
+					(reference "R32")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/bc6e59b8-de23-4612-919f-703fdfe79adb"
+					(reference "R23")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/d6a64fc4-7eb1-4b69-b617-0d54bc6f1e42"
+					(reference "R20")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/f378ce2c-86d1-45a9-afd1-7024b9fffbff"
+					(reference "R29")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Zener")
+		(at 71.12 46.99 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp yes)
+		(uuid "0b6cb29d-fa54-4f57-80ad-d734f392ce3d")
+		(property "Reference" "D5"
+			(at 68.58 46.99 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "3V3 0.5W"
+			(at 73.66 46.99 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-123F"
+			(at 71.12 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://diotec.com/request/datasheet/bzt52c2v4.pdf"
+			(at 71.12 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Zener diode"
+			(at 71.12 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "486184b7-e943-47b3-922a-cb98fe4276af")
+		)
+		(pin "2"
+			(uuid "458ead52-1ed7-4b99-a687-962e478a83c7")
+		)
+		(instances
+			(project "K-Line"
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/216955d4-43a2-4933-8652-9c30fda298f5"
+					(reference "D5")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/31c8c698-4198-4dfc-8879-40b66d03fd67"
+					(reference "D8")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/6ceccfeb-eef4-456a-ba91-251819f6dbf3"
+					(reference "D11")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/7c74b53f-8d18-48bc-bf2d-e1fbb3edd64d"
+					(reference "D10")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/bc6e59b8-de23-4612-919f-703fdfe79adb"
+					(reference "D7")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/d6a64fc4-7eb1-4b69-b617-0d54bc6f1e42"
+					(reference "D6")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/f378ce2c-86d1-45a9-afd1-7024b9fffbff"
+					(reference "D9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 66.04 35.56 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp yes)
+		(uuid "2b86c863-a6c9-4c0d-b15e-bd335e55b412")
+		(property "Reference" "R15"
+			(at 67.31 38.1 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10K"
+			(at 67.31 35.56 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
+			(at 66.04 37.338 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 66.04 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 66.04 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2218a600-2f94-4cf5-b9b0-ecf0a02b9b4d")
+		)
+		(pin "2"
+			(uuid "16bb0882-8656-4bb7-9d4b-3876fb856c20")
+		)
+		(instances
+			(project "K-Line"
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/216955d4-43a2-4933-8652-9c30fda298f5"
+					(reference "R15")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/31c8c698-4198-4dfc-8879-40b66d03fd67"
+					(reference "R24")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/6ceccfeb-eef4-456a-ba91-251819f6dbf3"
+					(reference "R33")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/7c74b53f-8d18-48bc-bf2d-e1fbb3edd64d"
+					(reference "R30")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/bc6e59b8-de23-4612-919f-703fdfe79adb"
+					(reference "R21")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/d6a64fc4-7eb1-4b69-b617-0d54bc6f1e42"
+					(reference "R18")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/f378ce2c-86d1-45a9-afd1-7024b9fffbff"
+					(reference "R27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 71.12 40.64 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp yes)
+		(uuid "9347f737-94dd-44a5-b736-9906e921f341")
+		(property "Reference" "R16"
+			(at 68.58 41.91 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10K"
+			(at 71.12 41.91 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
+			(at 69.342 40.64 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.12 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 71.12 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b8d2c099-da57-4ce3-9c28-15aa03961f63")
+		)
+		(pin "2"
+			(uuid "8eaee143-18d7-4348-a187-13f16b71346f")
+		)
+		(instances
+			(project "K-Line"
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/216955d4-43a2-4933-8652-9c30fda298f5"
+					(reference "R16")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/31c8c698-4198-4dfc-8879-40b66d03fd67"
+					(reference "R25")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/6ceccfeb-eef4-456a-ba91-251819f6dbf3"
+					(reference "R34")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/7c74b53f-8d18-48bc-bf2d-e1fbb3edd64d"
+					(reference "R31")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/bc6e59b8-de23-4612-919f-703fdfe79adb"
+					(reference "R22")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/d6a64fc4-7eb1-4b69-b617-0d54bc6f1e42"
+					(reference "R19")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/f378ce2c-86d1-45a9-afd1-7024b9fffbff"
+					(reference "R28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 71.12 54.61 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp yes)
+		(fields_autoplaced yes)
+		(uuid "bcdc9f0b-18ea-4051-b19c-c86c133db848")
+		(property "Reference" "C1"
+			(at 74.93 53.34 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 74.93 55.88 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder"
+			(at 72.0852 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.12 54.61 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 71.12 54.61 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "8d4748ed-f622-49db-81f6-216ad333f15b")
+		)
+		(pin "2"
+			(uuid "9adc0a2a-d276-4c9d-ba24-a1ef7b5a745b")
+		)
+		(instances
+			(project "K-Line"
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/216955d4-43a2-4933-8652-9c30fda298f5"
+					(reference "C1")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/31c8c698-4198-4dfc-8879-40b66d03fd67"
+					(reference "C4")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/6ceccfeb-eef4-456a-ba91-251819f6dbf3"
+					(reference "C7")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/7c74b53f-8d18-48bc-bf2d-e1fbb3edd64d"
+					(reference "C6")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/bc6e59b8-de23-4612-919f-703fdfe79adb"
+					(reference "C3")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/d6a64fc4-7eb1-4b69-b617-0d54bc6f1e42"
+					(reference "C2")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/f378ce2c-86d1-45a9-afd1-7024b9fffbff"
+					(reference "C5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 71.12 58.42 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp yes)
+		(fields_autoplaced yes)
+		(uuid "bf2e5565-15f5-4a99-87f8-b62120b97142")
+		(property "Reference" "#PWR020"
+			(at 71.12 64.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 71.12 63.5 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 71.12 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 71.12 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 71.12 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "22d8fa47-51ba-45ac-8edf-b5dc02fb2964")
+		)
+		(instances
+			(project "K-Line"
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/216955d4-43a2-4933-8652-9c30fda298f5"
+					(reference "#PWR020")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/31c8c698-4198-4dfc-8879-40b66d03fd67"
+					(reference "#PWR023")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/6ceccfeb-eef4-456a-ba91-251819f6dbf3"
+					(reference "#PWR026")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/7c74b53f-8d18-48bc-bf2d-e1fbb3edd64d"
+					(reference "#PWR025")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/bc6e59b8-de23-4612-919f-703fdfe79adb"
+					(reference "#PWR022")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/d6a64fc4-7eb1-4b69-b617-0d54bc6f1e42"
+					(reference "#PWR021")
+					(unit 1)
+				)
+				(path "/0b1c9291-1cd8-431c-aa7c-2a9d462c7b18/f378ce2c-86d1-45a9-afd1-7024b9fffbff"
+					(reference "#PWR024")
+					(unit 1)
+				)
+			)
+		)
+	)
+)
